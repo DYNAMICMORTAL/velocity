@@ -4,11 +4,11 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Add project root to Python path for development
-project_root = str(Path(__file__).parent.parent.parent)
+project_root = str(Path(__file__).parent.parent.parent.parent)
 if project_root not in os.environ.get("PYTHONPATH", "").split(os.pathsep):
     os.environ["PYTHONPATH"] = os.pathsep.join([project_root, os.environ.get("PYTHONPATH", "")])
 
-from velocityai.llms.gemini import GeminiLLM
+from velocityai.llms.base import BaseLLM
 from agents.researcher import ResearchAgent
 from agents.writer import WriterAgent
 
@@ -17,7 +17,8 @@ load_dotenv()
 
 async def main():
     # Initialize LLM with custom settings
-    llm = GeminiLLM(
+    llm = BaseLLM.create_llm(
+        provider="gemini",
         model="gemini-1.5-pro",
         temperature=0.8,  # More creative responses
         top_p=0.9
@@ -58,4 +59,4 @@ async def main():
     print(edited)
 
 if __name__ == "__main__":
-    asyncio.run(main()) 
+    asyncio.run(main())

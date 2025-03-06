@@ -1,12 +1,15 @@
 import asyncio
-from velocityai.llms.gemini import GeminiLLM
+from velocityai.llms.base import BaseLLM
 from velocityai.agents.researcher import ResearchAgent
 from velocityai.agents.writer import WriterAgent
 
 async def main():
     # Initialize LLM
     import os
-    llm = GeminiLLM(api_key=os.getenv("GEMINI_API_KEY"))
+    llm = BaseLLM.create_llm(
+        provider="gemini",
+        api_key=os.getenv("GEMINI_API_KEY")
+    )
     
     # Create agents
     researcher = ResearchAgent(llm)

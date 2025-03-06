@@ -28,4 +28,22 @@ Your responses should be informative and well-structured."""
             )
             base_prompt += f"\n\nYou have access to the following tools:\n{tool_descriptions}"
             
-        return base_prompt 
+        return base_prompt
+
+    @staticmethod
+    def create_llm(provider: str, **kwargs) -> "BaseLLM":
+        """Factory method to create LLM instance based on provider."""
+        if provider == "openai":
+            from velocityai.llms.openai import OpenAILLM
+            return OpenAILLM(**kwargs)
+        elif provider == "claude":
+            from velocityai.llms.claude import ClaudeLLM
+            return ClaudeLLM(**kwargs)
+        elif provider == "qroq":
+            from velocityai.llms.qroq import QroqLLM
+            return QroqLLM(**kwargs)
+        elif provider == "gemini":
+            from velocityai.llms.gemini import GeminiLLM
+            return GeminiLLM(**kwargs)
+        else:
+            raise ValueError(f"Unsupported LLM provider: {provider}")

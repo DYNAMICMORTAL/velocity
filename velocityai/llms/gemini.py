@@ -16,7 +16,7 @@ class GeminiLLM(BaseLLM):
         temperature: float = 0.7,
         top_p: float = 0.95,
         top_k: int = 40,
-        max_output_tokens: int = 8192,
+        max_output_tokens: int = 1000,  # Reduced response size
     ):
         """
         Initialize Gemini LLM with simple configuration.
@@ -84,4 +84,4 @@ class GeminiLLM(BaseLLM):
         try:
             return json.loads(text)
         except json.JSONDecodeError:
-            return {"type": "error", "content": "Failed to parse JSON response"} 
+            return {"type": "error", "content": "Failed to parse JSON response"}
